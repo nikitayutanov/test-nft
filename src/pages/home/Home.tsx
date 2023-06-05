@@ -1,5 +1,9 @@
+import { Task } from "./components/task";
+
 function Home() {
-  return <div>Home page</div>;
+  return <div>
+            <Task />
+         </div>;
 }
 
 export { Home };
