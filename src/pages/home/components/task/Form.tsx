@@ -1,9 +1,11 @@
 import { ChangeEvent, KeyboardEventHandler, useContext, useState } from 'react';
-import { useAccount } from '@gear-js/react-hooks';
+import { useAccount, useApi } from '@gear-js/react-hooks';
+import { GearApi } from '@gear-js/api';
+import { ApiPromise, WsProvider } from '@polkadot/api';
 import styles from './Task.module.scss';
 import { MintFormInputData } from './types';
 import { useStageContext } from './Context';
-import { MintNft } from './hooks';
+import { NetworkWsUrl, programId } from './consts';
 
 function MintForm () { 
 
@@ -23,6 +25,8 @@ function MintForm () {
 
 
     const { stage, setStage } = useStageContext();
+    const { account } = useAccount()
+    const { api }= useApi()
 
     const [FormInput, UpdateFormInput] = useState<MintFormInputData>(FormDefaultInput)
 
@@ -50,20 +54,24 @@ function MintForm () {
         return true
     }
 
-    const SubmitNftForm = () => {
+    const SubmitNftForm = async () => {
           if (!FormValidationFilter()) {
               console.log("invalid data")
               return;
           }
+          if (!account) {
+              return;
+          }
+          // console.log(account)
+          // console.log(api.provider)
 
           setStage("pending")
-          MintNft(FormInput).then((res) => {
-             if (res) {
-                setStage("success")
-             } else {
-                setStage("fail")
-             }
-          })
+
+          const gearApi = await GearApi.create({
+            providerAddress: NetworkWsUrl,
+          });
+
+          // await api.programState.read({ programId: programId }, {});
           
     }
 
