@@ -64,13 +64,38 @@
     }
 }
 
-.pendingMessage {
+.msgContainer {
     width: 100%;
     min-height: 400px;
+}
+
+.pendingMessage {
+    width: 100%;
     display: flex;
     justify-content: center;
     font-size: 64px;
     color: #2bd071;
+
+    .fail {
+        color: #db3709;
+    }
+}
+
+.nftContainer {
+    width: 100%;
+    display: flex;
+    margin: 32px 0;
+    padding: 20px;
+    justify-content: space-between;
+    border: 1px solid #2bd071;
+    border-radius: 20px;
+}
+
+.nftDtItem {
+    color: #787878;
+    text-align: center;
+    font-size: 12px;
+    width: 21%;
 }
 
 

@@ -2,7 +2,8 @@ export type InputNames = "name" | "description" | "metadata"
 
 export type FormPendingState = "input" | "pending" | "success" | "fail"
 
-export interface Mint {
+export type Mint = {
+  Mint: {
     transaction_id: number,
     token_metadata: {
       name: string,
@@ -10,7 +11,8 @@ export interface Mint {
       media: string,
       reference: string,
     },
-  }
+  },
+ }
 
 export interface MintFormInputData {
     name: string,

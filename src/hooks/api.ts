@@ -12,7 +12,7 @@ function useNFTMetadata() {
 function useNFTState<T>(functionName: string, payload: AnyJson) {
   const { buffer } = useWasmMetadata(stateMetaWasm);
 
-  return useReadWasmState<T>(ADDRESS.CONTRACT, buffer, functionName, payload);
+  return useReadWasmState<any[]>(ADDRESS.CONTRACT, buffer, functionName, payload);
 }
 
 function useSendNFTMessage() {

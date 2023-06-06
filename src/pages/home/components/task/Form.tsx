@@ -1,32 +1,18 @@
 import { ChangeEvent, KeyboardEventHandler, useContext, useState } from 'react';
 import { useAccount, useApi } from '@gear-js/react-hooks';
 import { GearApi } from '@gear-js/api';
-import { ApiPromise, WsProvider } from '@polkadot/api';
+import { useNFTState, useSendNFTMessage } from 'hooks/api';
 import styles from './Task.module.scss';
-import { MintFormInputData } from './types';
+import { Mint, MintFormInputData } from './types';
 import { useStageContext } from './Context';
-import { NetworkWsUrl, programId } from './consts';
+import { FormDefaultInput, FormInputNames, programId } from './consts';
 
 function MintForm () { 
 
-    const FormDefaultInput : MintFormInputData = {
-        name: "",
-        description: "",
-        media: "",
-        reference: ""
-    }
-
-    const FormInputNames : MintFormInputData = {
-        name: "name",
-        description: "description",
-        media: "media",
-        reference: "reference"
-    }
-
-
-    const { stage, setStage } = useStageContext();
+    const { setStage } = useStageContext();
     const { account } = useAccount()
-    const { api }= useApi()
+    const { api } = useApi();
+    const send = useSendNFTMessage()
 
     const [FormInput, UpdateFormInput] = useState<MintFormInputData>(FormDefaultInput)
 
@@ -62,16 +48,45 @@ function MintForm () {
           if (!account) {
               return;
           }
-          // console.log(account)
-          // console.log(api.provider)
 
           setStage("pending")
 
-          const gearApi = await GearApi.create({
-            providerAddress: NetworkWsUrl,
-          });
+          const msg : Mint = {
+            Mint: {
+              transaction_id: Math.round(Math.random() * 10000000),
+              token_metadata: {
+                name: FormInput.name,
+                description: FormInput.description,
+                media: FormInput.media,
+                reference: FormInput.reference,
+              },
+            },
+           }
 
-          // await api.programState.read({ programId: programId }, {});
+          try {
+              const txn = send(msg)
+              const unsub = await api.gearEvents.subscribeToGearEvent(
+                'MessageQueued',
+                ({ data: { id, source, destination, entry } }) => {
+
+                  if (destination.toHex() === programId) {
+                     setStage('success')
+                     unsub()
+                  }
+
+                  console.log(account.address)
+
+                  console.log({
+                    messageId: id.toHex(),
+                    programId: destination.toHex(),
+                    userId: source
+                  });
+                },
+              );
+
+          } catch (e) {
+              console.log(e)
+          }
           
     }
 
