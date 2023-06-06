@@ -1,7 +1,6 @@
-import { ChangeEvent, KeyboardEventHandler, useContext, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useAccount, useApi } from '@gear-js/react-hooks';
-import { GearApi } from '@gear-js/api';
-import { useNFTState, useSendNFTMessage } from 'hooks/api';
+import { useSendNFTMessage } from 'hooks/api';
 import styles from './Task.module.scss';
 import { Mint, MintFormInputData } from './types';
 import { useStageContext } from './Context';
@@ -15,8 +14,10 @@ function MintForm () {
     const send = useSendNFTMessage()
 
     const [FormInput, UpdateFormInput] = useState<MintFormInputData>(FormDefaultInput)
+    const [IsWrongInput, markIsWrongInput] = useState(false)
 
     const WriteInput = (event : ChangeEvent) => {
+        markIsWrongInput(false)
         const element = event.target as HTMLInputElement
         const val = element.value
         const field : string = element.dataset.field || ""
@@ -43,6 +44,7 @@ function MintForm () {
     const SubmitNftForm = async () => {
           if (!FormValidationFilter()) {
               console.log("invalid data")
+              markIsWrongInput(true)
               return;
           }
           if (!account) {
@@ -74,13 +76,6 @@ function MintForm () {
                      unsub()
                   }
 
-                  console.log(account.address)
-
-                  console.log({
-                    messageId: id.toHex(),
-                    programId: destination.toHex(),
-                    userId: source
-                  });
                 },
               );
 
@@ -91,7 +86,7 @@ function MintForm () {
     }
 
     return(
-       <div className={styles.mintForm}>
+       <div className={IsWrongInput ? `${styles.mintForm} ${styles.wrongInput}` : styles.mintForm}>
         <h5>
             Name
         </h5>
