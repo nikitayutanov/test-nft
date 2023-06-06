@@ -1,4 +1,5 @@
 import { ChangeEvent, KeyboardEventHandler, useContext, useState } from 'react';
+import { useAccount } from '@gear-js/react-hooks';
 import styles from './Task.module.scss';
 import { MintFormInputData } from './types';
 import { useStageContext } from './Context';
@@ -9,13 +10,15 @@ function MintForm () {
     const FormDefaultInput : MintFormInputData = {
         name: "",
         description: "",
-        metadata: ""
+        media: "",
+        reference: ""
     }
 
     const FormInputNames : MintFormInputData = {
         name: "name",
         description: "description",
-        metadata: "metadata"
+        media: "media",
+        reference: "reference"
     }
 
 
@@ -30,7 +33,8 @@ function MintForm () {
         const newFormData : MintFormInputData = {
             name: field === FormInputNames.name ? val : FormInput.name,
             description: field === FormInputNames.description ? val : FormInput.description,
-            metadata: field === FormInputNames.metadata ? val : FormInput.metadata
+            media: field === FormInputNames.media ? val : FormInput.media,
+            reference: field === FormInputNames.reference ? val : FormInput.reference
         }
         UpdateFormInput(newFormData)
     }
@@ -38,7 +42,8 @@ function MintForm () {
     const FormValidationFilter = () => {
         if (FormInput.name === FormDefaultInput.name ||
             FormInput.description === FormDefaultInput.description ||
-            FormInput.metadata === FormDefaultInput.metadata ) {
+            FormInput.media === FormDefaultInput.media ||
+            FormInput.reference === FormDefaultInput.reference ) {
                 return false
             }
         
@@ -46,9 +51,11 @@ function MintForm () {
     }
 
     const SubmitNftForm = () => {
-          if (!FormValidationFilter) {
-              return
+          if (!FormValidationFilter()) {
+              console.log("invalid data")
+              return;
           }
+
           setStage("pending")
           MintNft(FormInput).then((res) => {
              if (res) {
@@ -79,13 +86,24 @@ function MintForm () {
                   value={FormInput.description} 
                   placeholder="Description" />
         <h5>
-            Metadata
+            Media
         </h5>
         <input type="text" 
-               data-field={FormInputNames.metadata}  
-               value={FormInput.metadata} 
+               data-field={FormInputNames.media}  
+               value={FormInput.media} 
                onChange={WriteInput}
-               placeholder="Metadata" />
+               placeholder="Media" />
+        <h5>
+            Reference
+        </h5>
+        <input type="text" 
+               data-field={FormInputNames.reference}  
+               value={FormInput.reference} 
+               onChange={WriteInput}
+               placeholder="Reference" />
+        <h5>
+            Sent transaction
+        </h5>
         <button className={styles.execBtn} type="button" onClick={SubmitNftForm}>
             Mint
         </button>

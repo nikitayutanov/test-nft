@@ -15,7 +15,8 @@ export interface Mint {
 export interface MintFormInputData {
     name: string,
     description: string,
-    metadata: string
+    media: string,
+    reference: string
 }
 
 export interface StageContext {
