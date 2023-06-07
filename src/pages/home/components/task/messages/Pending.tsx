@@ -1,4 +1,3 @@
-import { useAlert } from '@gear-js/react-hooks'
 import styles from '../Task.module.scss'
 import { useStageContext } from '../Context'
 

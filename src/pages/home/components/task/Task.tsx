@@ -1,13 +1,15 @@
-import { createContext, useContext, useState } from 'react';
 import styles from './Task.module.scss';
 import { MintForm } from './Form';
-import {  StageContext } from './types'
 import { StageProvider, useStageContext } from './Context';
 import { FailMessage, PendingMessage, SuccessMessage } from './messages';
 
 function FormInner () {
+
+    /* 
+        Screen depends on form stage: form or message with result
+    */
         
-    const { stage, setStage } = useStageContext();
+    const { stage } = useStageContext();
 
     switch (stage) {
         case "input" :
@@ -27,7 +29,7 @@ function Task () {
 
     return(
         <StageProvider>
-            <div  className={styles.content}>
+            <div className={styles.content}>
                 <FormInner />
             </div>
         </StageProvider>

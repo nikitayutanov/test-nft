@@ -21,6 +21,12 @@ export interface MintFormInputData {
     reference: string
 }
 
+export interface CanvasAnimationProps {
+  width: number;
+  height: number;
+  duration: number;
+}
+
 export interface StageContext {
   stage: FormPendingState;
   setStage: (newStage: FormPendingState) => void;

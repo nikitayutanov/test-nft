@@ -17,3 +17,5 @@ export const FormInputNames : MintFormInputData = {
     media: "media",
     reference: "reference"
 }
+
+export const animDuration = 8750
