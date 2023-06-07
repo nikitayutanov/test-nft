@@ -1,6 +1,12 @@
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react';
 import {  FormPendingState, StageContext } from './types'
 
+/* 
+    Context using for moving between stages:
+    input - form itself
+    pending, success, fail - messages after submit
+*/
+
 interface FormContextProviderProps extends PropsWithChildren<{}> { }
 
 const FormContext = createContext<StageContext | null>(null)

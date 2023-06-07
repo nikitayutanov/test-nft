@@ -14,7 +14,8 @@ function MintForm () {
     const send = useSendNFTMessage()
 
     const [FormInput, UpdateFormInput] = useState<MintFormInputData>(FormDefaultInput)
-    const [IsWrongInput, markIsWrongInput] = useState(false)
+    // Red border on inputs if one of this is empty
+    const [IsWrongInput, markIsWrongInput] = useState(false) 
 
     const WriteInput = (event : ChangeEvent) => {
         markIsWrongInput(false)
@@ -66,10 +67,11 @@ function MintForm () {
            }
 
           try {
-              const txn = send(msg)
+              send(msg)
+              // Subscribe to a new events and looking for our
               const unsub = await api.gearEvents.subscribeToGearEvent(
                 'MessageQueued',
-                ({ data: { id, source, destination, entry } }) => {
+                ({ data: { destination } }) => { // id, source, destination, entry
 
                   if (destination.toHex() === programId) {
                      setStage('success')

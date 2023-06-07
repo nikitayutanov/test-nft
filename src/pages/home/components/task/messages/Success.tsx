@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
 import { useNFTState } from 'hooks/api';
 import { useStageContext } from '../Context';
 import styles from '../Task.module.scss'
