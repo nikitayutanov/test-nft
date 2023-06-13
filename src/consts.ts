@@ -2,7 +2,7 @@ import { HexString } from '@polkadot/util/types';
 
 const ADDRESS = {
   NODE: 'wss://testnet.vara.rs',
-  CONTRACT: '0xf1906fc48a657b95d00b7df50605911898b061b3902bf54a805f3afd6fd17379' as HexString,
+  CONTRACT: '0x7b128c1ff6bf222b04333ce3050820dda518c8a9186239ffbf860915912ecf61' as HexString,
 };
 
 const LOCAL_STORAGE = {
