@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { cx } from '@/utils';
+import { cx, deepEqualProps } from '@/utils';
 import styles from './GalleryView.module.scss';
 import { GalleryViewProps } from './GalleryView.interfaces';
 import { Loader } from '@/components/loaders';
 
-function GalleryView({ nfts, isLoading }: GalleryViewProps) {
+function GalleryViewComponent({ nfts, isLoading }: GalleryViewProps) {
   return (
     <div className={cx(styles.container)}>
       {isLoading ? (
@@ -29,5 +30,7 @@ function GalleryView({ nfts, isLoading }: GalleryViewProps) {
     </div>
   );
 }
+
+const GalleryView = memo(GalleryViewComponent, deepEqualProps);
 
 export { GalleryView };
