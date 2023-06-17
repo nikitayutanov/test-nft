@@ -8,4 +8,5 @@ export interface NftCard {
 
 export interface GalleryViewProps {
   nfts: NftCard[];
+  isLoading: boolean;
 }
