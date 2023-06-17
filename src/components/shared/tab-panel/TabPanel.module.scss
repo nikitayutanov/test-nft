@@ -1,0 +1,38 @@
+@use '@gear-js/ui/mixins' as *;
+
+
+.tab-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab {
+    margin: 0px 4px 4px 0;
+    height: 50px;
+    width: 150px;
+    background: black;
+    color: #D3D3D3;
+    border: none;
+    border-color: black;
+    outline: none;
+    font-size: 20px;
+    cursor: pointer;
+    box-sizing:content-box;
+    transition: border-color 0.3s, color 0.3s;
+
+    &-active {
+        border-bottom: 2px solid #2bd071;
+        color: white;
+    }
+}
+
+.tabs {
+    padding-bottom: 20px;
+}
+
+.content {
+    flex: 1;
+    border-top: 2px solid gray;
+    border-bottom: 2px solid gray;
+}

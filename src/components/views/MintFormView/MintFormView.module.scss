@@ -1,0 +1,25 @@
+.form {
+    padding: 10px 0;
+    animation: ff 1s;
+    transition: transform 1s ease-out; 
+}
+
+.input.input {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    margin: 20px 0;
+}
+
+.button {
+    margin-top: 20px;
+}
+
+@keyframes ff {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
